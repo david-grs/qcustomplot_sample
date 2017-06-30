@@ -50,7 +50,6 @@ void Plot::Refresh()
     timeAxis.push_back(.0);
     mGraph->setData(timeAxis, mValues, mColors);
 
-    rescaleAxes();
     replot();
 }
 
@@ -119,47 +118,9 @@ void Plot::InitPlotArea()
     axisRectGradient.setColorAt(1, QColor(30, 30, 30));
     axisRect()->setBackground(axisRectGradient);
 
-    rescaleAxes();
-
-    connect(this, SIGNAL(mouseWheel(QWheelEvent*)), this, SLOT(OnMouseWheel(QWheelEvent*)));
-    connect(this, SIGNAL(mousePress(QMouseEvent*)), this, SLOT(OnMousePress(QMouseEvent*)));
+    xAxis->setRange(-10, 0);
+    yAxis->setRange(0, 100);
 }
-
-#if 0
-void Plot::OnMousePress(QMouseEvent* event)
-{
-    // Three actions possible here:
-    // - right click = reset zoom
-    // - left click with ctrl = drag
-    // - left click (withtout ctrl) = zoom
-    if (event->button() == Qt::RightButton)
-    {
-        rescaleAxes();
-        replot();
-    }
-    else if (QApplication::keyboardModifiers() & Qt::ControlModifier)
-    {
-        setSelectionRectMode(QCP::SelectionRectMode::srmNone);
-    }
-    else
-    {
-        setSelectionRectMode(QCP::SelectionRectMode::srmZoom);
-    }
-}
-
-void Plot::OnMouseWheel(QWheelEvent* event)
-{
-    const QCPRange xAxisRange = axisRect()->rangeZoomAxis(Qt::Horizontal)->range();
-    const QCPRange yAxisRange = axisRect()->rangeZoomAxis(Qt::Vertical)->range();
-    const bool zoomOut = event->angleDelta().y() < 0; // scroll down
-
-    // it's already out of bounds, no need to go further
-    if (zoomOut && ((xAxisRange.lower < .0 && xAxisRange.upper > 120.0) || (yAxisRange.lower < .0 && yAxisRange.upper > 100.0)))
-        axisRect()->setRangeZoom(0);
-    else
-        axisRect()->setRangeZoom(Qt::Horizontal|Qt::Vertical);
-}
-#endif
 
 void QCPColorGraph::setData(const QVector<double>& keys,
                             const QVector<double>& values,

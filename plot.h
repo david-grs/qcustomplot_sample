@@ -38,10 +38,6 @@ public:
 public slots:
     void Push(QDateTime x, double y, QColor color);
 
-private slots:
-    //void OnMousePress(QMouseEvent*);
-    //void OnMouseWheel(QWheelEvent*);
-
 public:
     void InitPlotArea();
     void Refresh();
