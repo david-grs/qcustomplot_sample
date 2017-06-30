@@ -16,6 +16,7 @@ Plot::Plot(QWidget* pp) :
     QCustomPlot(pp)
 {
     InitPlotArea();
+    Refresh();
 
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, [this]()
