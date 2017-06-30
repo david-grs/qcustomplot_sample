@@ -1,5 +1,6 @@
 #include "plot.h"
 
+#include <iostream>
 
 namespace Ui {
 
@@ -57,12 +58,13 @@ void Plot::InitPlotArea()
     connect(this, SIGNAL(mousePress(QMouseEvent*)), this, SLOT(OnMousePress(QMouseEvent*)));
 }
 
-void Plot::Push(double x, double y)
+void Plot::Push(double x, double y, QColor color)
 {
-    mXAxis.push_back(x);
-    mYAxis.push_back(y);
+    mKeys.push_back(x);
+    mValues.push_back(y);
+    mColors.push_back(color);
 
-    mGraph->setData(mXAxis, mYAxis);
+    mGraph->setData(mKeys, mValues, mColors);
 
     rescaleAxes();
     replot();
@@ -76,4 +78,16 @@ void Plot::OnMouseWheel(QWheelEvent*)
 {
 }
 
+void QCPColorGraph::drawLinePlot(QCPPainter *painter, const QVector<QPointF> &lines) const
+{
+    //QCPGraph::drawLinePlot(painter, lines);
+
+    if (painter->pen().style() != Qt::NoPen && painter->pen().color().alpha() != 0)
+    {
+        applyDefaultAntialiasingHint(painter);
+        drawPolyline(painter, lines);
+    }
 }
+
+}
+

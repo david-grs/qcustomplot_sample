@@ -3,6 +3,9 @@
 #include "thirdparty/qcustomplot.h"
 
 #include <QVector>
+#include <QColor>
+
+#include <cassert>
 
 namespace Ui {
 
@@ -13,10 +16,22 @@ public:
         QCPGraph(keyAxis, valueAxis)
     {
     }
-    virtual void draw(QCPPainter* painter) override
+
+    void setData(const QVector<double>& keys,
+                 const QVector<double>& values,
+                 const QVector<QColor>& colors)
     {
-        QCPGraph::draw(painter);
+        assert(keys.size() == values.size());
+        assert(keys.size() == colors.size());
+
+        QCPGraph::setData(keys, values);
+        mColors = colors;
     }
+
+    virtual void drawLinePlot(QCPPainter *painter, const QVector<QPointF> &lines) const override;
+
+private:
+    QVector<QColor> mColors;
 };
 
 class Plot : public QCustomPlot
@@ -27,7 +42,7 @@ public:
     Plot(QWidget* pp = nullptr);
 
 public slots:
-    void Push(double x, double y);
+    void Push(double x, double y, QColor color);
 
 private slots:
     void OnMousePress(QMouseEvent*);
@@ -38,8 +53,9 @@ private:
 
     QCPColorGraph* mGraph = nullptr;
 
-    QVector<double> mXAxis;
-    QVector<double> mYAxis;
+    QVector<double> mKeys;
+    QVector<double> mValues;
+    QVector<QColor> mColors;
 };
 
 }
