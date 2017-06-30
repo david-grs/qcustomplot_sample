@@ -20,12 +20,12 @@ public:
 
     void setData(const QVector<double>& keys,
                  const QVector<double>& values,
-                 const QVector<QColor>& colors);
+                 const QVector<QColor>* colors);
 
     virtual void drawLinePlot(QCPPainter* painter, const QVector<QPointF>& lines) const override;
 
 private:
-    QVector<QColor> mColors;
+    const QVector<QColor>* mColors;
 };
 
 class Plot : public QCustomPlot
@@ -42,7 +42,7 @@ private:
     void InitPlotArea();
     void Refresh();
     void RemoveOldPoints();
-    
+
     QCPColorGraph* mGraph = nullptr;
 
     QVector<QDateTime> mTimestamps;

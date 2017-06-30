@@ -16,7 +16,6 @@ Plot::Plot(QWidget* pp) :
     QCustomPlot(pp)
 {
     InitPlotArea();
-    Refresh();
 
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, [this]()
@@ -61,7 +60,7 @@ void Plot::Refresh()
     }
 
     mTimeAxis.push_back(.0);
-    mGraph->setData(mTimeAxis, mValues, mColors);
+    mGraph->setData(mTimeAxis, mValues, &mColors);
 
     replot();
 }
@@ -87,6 +86,8 @@ void Plot::Push(QDateTime ts, double y, QColor color)
         mTimestamps.push_back(ts.addMSecs(1));
     mValues.push_back(y);
     mColors.push_back(color);
+
+    Refresh();
 }
 
 void Plot::InitPlotArea()
@@ -137,13 +138,13 @@ void Plot::InitPlotArea()
 
 void QCPColorGraph::setData(const QVector<double>& keys,
                             const QVector<double>& values,
-                            const QVector<QColor>& colors)
+                            const QVector<QColor>* colors)
 {
     assert(keys.size() == values.size());
-    assert(keys.size() == colors.size());
+    assert(keys.size() == colors->size());
 
-    QCPGraph::setData(keys, values);
     mColors = colors;
+    QCPGraph::setData(keys, values);
 }
 
 void QCPColorGraph::drawLinePlot(QCPPainter* painter, const QVector<QPointF>& points) const
@@ -156,7 +157,7 @@ void QCPColorGraph::drawLinePlot(QCPPainter* painter, const QVector<QPointF>& po
     QPointF lastPoint = points[0];
     for (int i = 1; i < points.size(); ++i)
     {
-        painter->setPen(QPen(mColors[i], 4));
+        painter->setPen(QPen((*mColors)[i], 4));
 
         drawPolyline(painter, {lastPoint, points[i]});
         lastPoint = points[i];
