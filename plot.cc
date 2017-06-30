@@ -24,7 +24,9 @@ Plot::Plot(QWidget* pp) :
 
     connect(timer, &QTimer::timeout, [this]() {
         Refresh();
-        // Push(QDateTime::currentDateTime(), std::rand() % 100, GenColor());
+        static int i = 0;
+        if ((++i) % 5 == 0)
+            Push(QDateTime::currentDateTime(), std::rand() % 100, GenColor());
     });
 
     timer->start(1000);
@@ -44,7 +46,7 @@ void Plot::Refresh()
 
         timeAxis.push_back(relativeMinutes);
     }
-    
+
     timeAxis.push_back(.0);
     mGraph->setData(timeAxis, mValues, mColors);
 
@@ -54,19 +56,21 @@ void Plot::Refresh()
 
 void Plot::Push(QDateTime ts, double y, QColor color)
 {
-    if (mValues.empty())
-    {
-        mValues.push_back(y);
-        mColors.push_back(color);
-    }
-    else
-    {
-        mValues.back() = y;
-        mColors.back() = color;
-    }
+    //[ 1 1 ]
+    //[ X ]
 
-    mValues.push_back(y);
+    //[ 1 1 2 2 ]
+    //[ X Y Y ]
+
+    const bool firstPoint = mTimestamps.empty();
+
     mTimestamps.push_back(ts);
+    mValues.push_back(y);
+    mColors.push_back(color);
+
+    if (!firstPoint)
+        mTimestamps.push_back(ts.addMSecs(1));
+    mValues.push_back(y);
     mColors.push_back(color);
 }
 
