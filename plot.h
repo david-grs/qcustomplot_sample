@@ -19,14 +19,7 @@ public:
 
     void setData(const QVector<double>& keys,
                  const QVector<double>& values,
-                 const QVector<QColor>& colors)
-    {
-        assert(keys.size() == values.size());
-        assert(keys.size() == colors.size());
-
-        QCPGraph::setData(keys, values);
-        mColors = colors;
-    }
+                 const QVector<QColor>& colors);
 
     virtual void drawLinePlot(QCPPainter* painter, const QVector<QPointF>& lines) const override;
 
