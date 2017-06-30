@@ -6,6 +6,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(Qt5Widgets REQUIRED)
 add_definitions("-DQT_NO_PRINTER=1")
-add_executable(hello_world main.cc thirdparty/qcustomplot.cpp)
+add_executable(hello_world main.cc plot.cc thirdparty/qcustomplot.cpp)
 
 qt5_use_modules(hello_world Widgets)
