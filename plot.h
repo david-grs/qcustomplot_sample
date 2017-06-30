@@ -28,7 +28,7 @@ public:
         mColors = colors;
     }
 
-    virtual void drawLinePlot(QCPPainter *painter, const QVector<QPointF> &lines) const override;
+    virtual void drawLinePlot(QCPPainter* painter, const QVector<QPointF>& lines) const override;
 
 private:
     QVector<QColor> mColors;

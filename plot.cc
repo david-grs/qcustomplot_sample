@@ -78,14 +78,20 @@ void Plot::OnMouseWheel(QWheelEvent*)
 {
 }
 
-void QCPColorGraph::drawLinePlot(QCPPainter *painter, const QVector<QPointF> &lines) const
+void QCPColorGraph::drawLinePlot(QCPPainter* painter, const QVector<QPointF>& lines) const
 {
-    //QCPGraph::drawLinePlot(painter, lines);
+    if (lines.size() < 2 || painter->pen().style() == Qt::NoPen || painter->pen().color().alpha() == 0)
+        return;
 
-    if (painter->pen().style() != Qt::NoPen && painter->pen().color().alpha() != 0)
+    applyDefaultAntialiasingHint(painter);
+
+    QPointF last = lines[0];
+    for (int i = 1; i < lines.size(); ++i)
     {
-        applyDefaultAntialiasingHint(painter);
-        drawPolyline(painter, lines);
+        painter->setPen(QPen(mColors[i], 4));
+
+        drawPolyline(painter, {last, lines[i]});
+        last = lines[i];
     }
 }
 
