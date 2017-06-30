@@ -56,11 +56,14 @@ void Plot::Refresh()
 
 void Plot::Push(QDateTime ts, double y, QColor color)
 {
-    //[ 1 1 ]
-    //[ X ]
-
-    //[ 1 1 2 2 ]
-    //[ X Y Y ]
+    // values are pushed in that way:
+    // 1. values =     [ 1  1 ]
+    //    timestamps = [ X ]
+    //
+    // 2. values =     [ 1 1 2 2 ]
+    //    timestamps = [ X Y Y ]
+    //
+    // 3.etc
 
     const bool firstPoint = mTimestamps.empty();
 
