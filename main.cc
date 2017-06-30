@@ -44,9 +44,15 @@ int main( int argc, char **argv )
     QApplication a( argc, argv );
     Ui::Plot plot;
 
+    int i = 0;
     for(auto x : GenPoints<10>()())
-        plot.Push(x.x, x.y, x.color);
-
+    {
+        auto now = QDateTime::currentDateTime().addSecs(-60.0 * i++);
+        plot.Push(now, x.y, x.color);
+    }
+    plot.Refresh();
+    plot.resize(800, 600);
     plot.show();
+    
     return a.exec();
 }

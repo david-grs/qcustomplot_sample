@@ -4,6 +4,7 @@
 
 #include <QVector>
 #include <QColor>
+#include <QDateTime>
 
 #include <cassert>
 
@@ -35,18 +36,19 @@ public:
     Plot(QWidget* pp = nullptr);
 
 public slots:
-    void Push(double x, double y, QColor color);
+    void Push(QDateTime x, double y, QColor color);
 
 private slots:
     //void OnMousePress(QMouseEvent*);
     //void OnMouseWheel(QWheelEvent*);
 
-private:
+public:
     void InitPlotArea();
+    void Refresh();
 
     QCPColorGraph* mGraph = nullptr;
 
-    QVector<double> mKeys;
+    QVector<QDateTime> mTimestamps;
     QVector<double> mValues;
     QVector<QColor> mColors;
 };

@@ -4,10 +4,58 @@
 
 namespace Ui {
 
+// TODO remove
+QColor GenColor()
+{
+    auto color = []() -> int { return std::abs(std::rand()) % 255; };
+    auto alpha = []() -> int { return std::abs(std::rand()) % 64 + 180; };
+    return QColor(color(), color(), color(), alpha());
+}
+
 Plot::Plot(QWidget* pp) :
     QCustomPlot(pp)
 {
     InitPlotArea();
+
+    // TODO remove
+
+    QTimer *timer = new QTimer(this);
+    //timer->setSingleShot(true);
+
+    connect(timer, &QTimer::timeout, [this]() {
+        // Push(QDateTime::currentDateTime(), std::rand() % 100, GenColor());
+        // timer->deleteLater();
+    });
+
+    timer->start(1000);
+}
+
+void Plot::Refresh()
+{
+    qint64 now = QDateTime::currentDateTime().toMSecsSinceEpoch();
+
+    QVector<double> timeAxis;
+    timeAxis.reserve(mValues.size());
+
+    for (const QDateTime& time : mTimestamps)
+    {
+        qint64 ts = time.toMSecsSinceEpoch();
+        const double relativeMinutes = - (now - ts) / 60000.0;
+
+        timeAxis.push_back(relativeMinutes);
+    }
+
+    mGraph->setData(timeAxis, mValues, mColors);
+
+    rescaleAxes();
+    replot();
+}
+
+void Plot::Push(QDateTime ts, double y, QColor color)
+{
+    mTimestamps.push_back(ts);
+    mValues.push_back(y);
+    mColors.push_back(color);
 }
 
 void Plot::InitPlotArea()
@@ -56,18 +104,6 @@ void Plot::InitPlotArea()
 
     connect(this, SIGNAL(mouseWheel(QWheelEvent*)), this, SLOT(OnMouseWheel(QWheelEvent*)));
     connect(this, SIGNAL(mousePress(QMouseEvent*)), this, SLOT(OnMousePress(QMouseEvent*)));
-}
-
-void Plot::Push(double x, double y, QColor color)
-{
-    mKeys.push_back(x);
-    mValues.push_back(y);
-    mColors.push_back(color);
-
-    mGraph->setData(mKeys, mValues, mColors);
-
-    rescaleAxes();
-    replot();
 }
 
 #if 0
