@@ -16,12 +16,6 @@ void Plot::InitPlotArea()
     mGraph = addGraph();
     mGraph->setPen(QPen(QColor(10, 140, 70, 160), 2));
 
-    //addLayer("plot", layer("main"), QCustomPlot::limAbove);
-    //addLayer("xyaxes", layer("main"), QCustomPlot::limBelow);
-    mGraph->setLayer("plot");
-    xAxis->grid()->setLayer("xyaxes");
-    yAxis->grid()->setLayer("xyaxes");
-
     xAxis->setBasePen(QPen(Qt::white, 1));
     yAxis->setBasePen(QPen(Qt::white, 1));
     xAxis->setTickPen(QPen(Qt::white, 1));
