@@ -14,7 +14,7 @@ void Plot::InitPlotArea()
     setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 
     mGraph = addGraph();
-    mGraph->setPen(QPen(QColor(10, 140, 70, 160), 2));
+    mGraph->setPen(QPen(QColor(10, 140, 70, 160), 4));
 
     xAxis->setBasePen(QPen(Qt::white, 1));
     yAxis->setBasePen(QPen(Qt::white, 1));
