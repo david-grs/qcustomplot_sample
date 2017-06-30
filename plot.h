@@ -47,6 +47,9 @@ public:
     QVector<QDateTime> mTimestamps;
     QVector<double> mValues;
     QVector<QColor> mColors;
+
+    // no state here, just to not allocate on every refresh
+    QVector<double> mTimeAxis;
 };
 
 }

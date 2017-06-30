@@ -36,19 +36,19 @@ void Plot::Refresh()
 {
     qint64 now = QDateTime::currentDateTime().toMSecsSinceEpoch();
 
-    QVector<double> timeAxis;
-    timeAxis.reserve(mValues.size());
+    mTimeAxis.clear();
+    mTimeAxis.reserve(mValues.size());
 
     for (const QDateTime& time : mTimestamps)
     {
         qint64 ts = time.toMSecsSinceEpoch();
         const double relativeMinutes = - (now - ts) / 60000.0;
 
-        timeAxis.push_back(relativeMinutes);
+        mTimeAxis.push_back(relativeMinutes);
     }
 
-    timeAxis.push_back(.0);
-    mGraph->setData(timeAxis, mValues, mColors);
+    mTimeAxis.push_back(.0);
+    mGraph->setData(mTimeAxis, mValues, mColors);
 
     replot();
 }
