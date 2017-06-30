@@ -23,8 +23,8 @@ Plot::Plot(QWidget* pp) :
     //timer->setSingleShot(true);
 
     connect(timer, &QTimer::timeout, [this]() {
+        Refresh();
         // Push(QDateTime::currentDateTime(), std::rand() % 100, GenColor());
-        // timer->deleteLater();
     });
 
     timer->start(1000);
@@ -44,7 +44,8 @@ void Plot::Refresh()
 
         timeAxis.push_back(relativeMinutes);
     }
-
+    
+    timeAxis.push_back(.0);
     mGraph->setData(timeAxis, mValues, mColors);
 
     rescaleAxes();
@@ -53,8 +54,19 @@ void Plot::Refresh()
 
 void Plot::Push(QDateTime ts, double y, QColor color)
 {
-    mTimestamps.push_back(ts);
+    if (mValues.empty())
+    {
+        mValues.push_back(y);
+        mColors.push_back(color);
+    }
+    else
+    {
+        mValues.back() = y;
+        mColors.back() = color;
+    }
+
     mValues.push_back(y);
+    mTimestamps.push_back(ts);
     mColors.push_back(color);
 }
 

@@ -47,12 +47,12 @@ int main( int argc, char **argv )
     int i = 0;
     for(auto x : GenPoints<10>()())
     {
-        auto now = QDateTime::currentDateTime().addSecs(-60.0 * i++);
+        auto now = QDateTime::currentDateTime().addSecs(-60.0 * (9 - i++));
         plot.Push(now, x.y, x.color);
     }
     plot.Refresh();
     plot.resize(800, 600);
     plot.show();
-    
+
     return a.exec();
 }
