@@ -13,7 +13,9 @@ void Plot::InitPlotArea()
 {
     setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 
-    mGraph = addGraph();
+    mGraph = new QCPColorGraph(xAxis, yAxis);
+    mGraph->setName(QLatin1String("MainGraph "));
+
     mGraph->setPen(QPen(QColor(10, 140, 70, 160), 4));
 
     xAxis->setBasePen(QPen(Qt::white, 1));

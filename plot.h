@@ -6,6 +6,19 @@
 
 namespace Ui {
 
+class QCPColorGraph : public QCPGraph
+{
+public:
+    QCPColorGraph(QCPAxis *keyAxis, QCPAxis *valueAxis) :
+        QCPGraph(keyAxis, valueAxis)
+    {
+    }
+    virtual void draw(QCPPainter* painter) override
+    {
+        QCPGraph::draw(painter);
+    }
+};
+
 class Plot : public QCustomPlot
 {
 Q_OBJECT
@@ -23,7 +36,7 @@ private slots:
 private:
     void InitPlotArea();
 
-    QCPGraph* mGraph = nullptr;
+    QCPColorGraph* mGraph = nullptr;
 
     QVector<double> mXAxis;
     QVector<double> mYAxis;
