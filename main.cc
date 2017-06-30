@@ -4,13 +4,8 @@
 #include <qpushbutton.h>
 
 #include <iostream>
-
-QColor GenColor()
-{
-    auto color = []() -> int { return std::abs(std::rand() * 1000) % 255; };
-    auto alpha = []() -> int { return std::abs(std::rand() * 1000) % 100 + 155; };
-    return QColor(color(), color(), color(), alpha());
-}
+#include <cstdlib>
+#include <array>
 
 struct Point
 {
@@ -19,12 +14,37 @@ struct Point
     QColor color;
 };
 
+QColor GenColor()
+{
+    auto color = []() -> int { return std::abs(std::rand()) % 255; };
+    auto alpha = []() -> int { return std::abs(std::rand()) % 64 + 180; };
+    return QColor(color(), color(), color(), alpha());
+}
+
+Point GenPoint(double x) { return {x, double(std::rand() % 100), GenColor()}; }
+
+template <std::size_t N>
+struct GenPoints
+{
+    std::array<Point, N> operator()()
+    {
+        return impl(std::make_index_sequence<N>());
+    }
+
+private:
+    template <std::size_t... Is>
+    std::array<Point, N> impl(std::index_sequence<Is...>)
+    {
+        return {GenPoint(Is)...};
+    }
+};
+
 int main( int argc, char **argv )
 {
     QApplication a( argc, argv );
     Ui::Plot plot;
 
-    for(auto x : {Point{1, 2, GenColor()}, Point{4, 10, GenColor()}, Point{5, 3, GenColor()}, Point{20, 15, GenColor()}})
+    for(auto x : GenPoints<10>()())
         plot.Push(x.x, x.y, x.color);
 
     plot.show();
