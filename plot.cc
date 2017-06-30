@@ -2,7 +2,7 @@
 
 
 namespace Ui {
-    
+
 Plot::Plot(QWidget* pp) :
     QCustomPlot(pp)
 {
@@ -10,6 +10,18 @@ Plot::Plot(QWidget* pp) :
 }
 
 void Plot::InitPlotArea()
+{
+}
+
+void Plot::OnValue(double v)
+{
+}
+
+void Plot::OnMousePress(QMouseEvent*)
+{
+}
+
+void Plot::OnMouseWheel(QWheelEvent*)
 {
 }
 
