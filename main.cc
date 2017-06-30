@@ -3,10 +3,13 @@
 #include <qapplication.h>
 #include <qpushbutton.h>
 
+#include <iostream>
 
 QColor GenColor()
 {
-    return QColor(std::rand() % 255, std::rand() % 255, std::rand() % 255);
+    auto color = []() -> int { return std::abs(std::rand() * 1000) % 255; };
+    auto alpha = []() -> int { return std::abs(std::rand() * 1000) % 100 + 155; };
+    return QColor(color(), color(), color(), alpha());
 }
 
 struct Point
@@ -19,7 +22,6 @@ struct Point
 int main( int argc, char **argv )
 {
     QApplication a( argc, argv );
-
     Ui::Plot plot;
 
     for(auto x : {Point{1, 2, GenColor()}, Point{4, 10, GenColor()}, Point{5, 3, GenColor()}, Point{20, 15, GenColor()}})
