@@ -38,10 +38,11 @@ public:
 public slots:
     void Push(QDateTime x, double y, QColor color);
 
-public:
+private:
     void InitPlotArea();
     void Refresh();
-
+    void RemoveOldPoints();
+    
     QCPColorGraph* mGraph = nullptr;
 
     QVector<QDateTime> mTimestamps;

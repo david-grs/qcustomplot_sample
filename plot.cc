@@ -17,13 +17,12 @@ Plot::Plot(QWidget* pp) :
 {
     InitPlotArea();
 
-    // TODO remove
-
     QTimer *timer = new QTimer(this);
-    //timer->setSingleShot(true);
-
-    connect(timer, &QTimer::timeout, [this]() {
+    connect(timer, &QTimer::timeout, [this]()
+    {
         Refresh();
+
+        // TODO remove
         static int i = 0;
         if ((++i) % 5 == 0)
             Push(QDateTime::currentDateTime(), std::rand() % 100, GenColor());
@@ -32,8 +31,21 @@ Plot::Plot(QWidget* pp) :
     timer->start(1000);
 }
 
+void Plot::RemoveOldPoints()
+{
+    QDateTime oldest = QDateTime::currentDateTime().addSecs(-600);
+    while (mTimestamps.size() >= 2 && mTimestamps[1] < oldest)
+    {
+        mTimestamps.pop_front();
+        mValues.pop_front();
+        mColors.pop_front();
+    }
+}
+
 void Plot::Refresh()
 {
+    RemoveOldPoints();
+
     qint64 now = QDateTime::currentDateTime().toMSecsSinceEpoch();
 
     mTimeAxis.clear();
