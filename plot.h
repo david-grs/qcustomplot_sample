@@ -38,8 +38,8 @@ public slots:
     void Push(double x, double y, QColor color);
 
 private slots:
-    void OnMousePress(QMouseEvent*);
-    void OnMouseWheel(QWheelEvent*);
+    //void OnMousePress(QMouseEvent*);
+    //void OnMouseWheel(QWheelEvent*);
 
 private:
     void InitPlotArea();
