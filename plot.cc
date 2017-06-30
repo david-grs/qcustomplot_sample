@@ -61,8 +61,15 @@ void Plot::InitPlotArea()
     connect(this, SIGNAL(mousePress(QMouseEvent*)), this, SLOT(OnMousePress(QMouseEvent*)));
 }
 
-void Plot::OnValue(double v)
+void Plot::Push(double x, double y)
 {
+    mXAxis.push_back(x);
+    mYAxis.push_back(y);
+
+    mGraph->setData(mXAxis, mYAxis);
+
+    rescaleAxes();
+    replot();
 }
 
 void Plot::OnMousePress(QMouseEvent*)

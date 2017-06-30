@@ -2,6 +2,8 @@
 
 #include "thirdparty/qcustomplot.h"
 
+#include <QVector>
+
 namespace Ui {
 
 class Plot : public QCustomPlot
@@ -12,7 +14,7 @@ public:
     Plot(QWidget* pp = nullptr);
 
 public slots:
-    void OnValue(double v);
+    void Push(double x, double y);
 
 private slots:
     void OnMousePress(QMouseEvent*);
@@ -21,8 +23,10 @@ private slots:
 private:
     void InitPlotArea();
 
-    QVector<double> mTimeAxis;
     QCPGraph* mGraph = nullptr;
+
+    QVector<double> mXAxis;
+    QVector<double> mYAxis;
 };
 
 }
