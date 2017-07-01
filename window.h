@@ -1,10 +1,10 @@
 #pragma once
 
-#include "plot.h"
-
 #include <QMainWindow>
 
 namespace Ui {
+
+struct Plot;
 
 class Window : public QMainWindow
 {
@@ -19,10 +19,9 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
+    Plot* mPlot;
+
     QPoint mPosition; // used in mouse events handler
-
-    Plot mPlot;
-
 };
 
 }

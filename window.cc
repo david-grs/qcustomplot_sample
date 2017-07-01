@@ -1,4 +1,5 @@
 #include "window.h"
+#include "plot.h"
 
 #include <cstdlib>
 #include <array>
@@ -37,31 +38,32 @@ private:
 
 namespace Ui {
 
-Window::Window() :
-    mPlot(this)
+Window::Window()
 {
+    mPlot = new Plot(this);
+
     int i = 0;
     for(auto x : GenPoints<10>()())
     {
         auto now = QDateTime::currentDateTime().addSecs(-60.0 * (9 - i++));
-        mPlot.Push(now, x.y, x.color);
+        mPlot->Push(now, x.y, x.color);
     }
 
     resize(800, 600);
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-    setCentralWidget(&mPlot);
+    setCentralWidget(mPlot);
 
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, [this]()
     {
         static int i = 0;
         if ((++i) % 5 == 0)
-            mPlot.Push(QDateTime::currentDateTime(), std::rand() % 100, GenColor());
+            mPlot->Push(QDateTime::currentDateTime(), std::rand() % 100, GenColor());
     });
 
     timer->start(1000);
 
-    mPlot.installEventFilter(this);
+    mPlot->installEventFilter(this);
 }
 
 bool Window::eventFilter(QObject *obj, QEvent *event)
