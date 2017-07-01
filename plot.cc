@@ -135,6 +135,14 @@ void Plot::InitPlotArea()
 
     xAxis->setRange(-10, 0);
     yAxis->setRange(0, 100);
+
+    QCPItemText *textLabel = new QCPItemText(this);
+    textLabel->setPositionAlignment(Qt::AlignTop | Qt::AlignHCenter);
+    textLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
+    textLabel->position->setCoords(0.95, 0); // top right
+    textLabel->setText("10Y");
+    textLabel->setFont(QFont(font().family(), 18));
+    textLabel->setColor(QColor(10, 140, 70, 255));
 }
 
 void QCPColorGraph::setData(const QVector<double>& keys,
