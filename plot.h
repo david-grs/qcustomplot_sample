@@ -38,16 +38,10 @@ public:
 public slots:
     void Push(QDateTime x, double y, QColor color);
 
-protected:
-    void mousePressEvent(QMouseEvent *event) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
-    
 private:
     void InitPlotArea();
     void Refresh();
     void RemoveOldPoints();
-
-    QPoint mpos;
 
     QCPColorGraph* mGraph = nullptr;
 

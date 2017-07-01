@@ -14,7 +14,7 @@ void Window::mouseMoveEvent(QMouseEvent *event)
         QPoint diff = event->pos() - mPosition;
         QPoint newpos = this->pos() + diff;
 
-        move(newpos);
+        this->move(newpos);
     }
 }
 

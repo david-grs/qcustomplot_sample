@@ -31,21 +31,6 @@ Plot::Plot(QWidget* pp) :
     timer->start(1000);
 }
 
-void Plot::mousePressEvent(QMouseEvent *event)
-{
-    mpos = event->pos();
-}
-
-void Plot::mouseMoveEvent(QMouseEvent *event)
-{
-    if (event->buttons() & Qt::LeftButton) {
-        QPoint diff = event->pos() - mpos;
-        QPoint newpos = this->pos() + diff;
-
-        this->move(newpos);
-    }
-}
-
 void Plot::RemoveOldPoints()
 {
     QDateTime oldest = QDateTime::currentDateTime().addSecs(-600);
