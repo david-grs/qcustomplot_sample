@@ -4,7 +4,7 @@
 
 namespace Ui {
 
-struct Plot;
+struct StreamPlot;
 
 class Window : public QMainWindow
 {
@@ -19,7 +19,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
-    Plot* mPlot;
+    StreamPlot* mPlot;
 
     QPoint mPosition; // used in mouse events handler
 };

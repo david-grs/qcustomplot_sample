@@ -28,12 +28,12 @@ private:
     const QVector<QColor>* mColors;
 };
 
-class Plot : public QCustomPlot
+class StreamPlot : public QCustomPlot
 {
 Q_OBJECT
 
 public:
-    Plot(QWidget* pp = nullptr);
+    explicit StreamPlot(QWidget* pp = nullptr);
 
 public slots:
     void Push(QDateTime x, double y, QColor color);

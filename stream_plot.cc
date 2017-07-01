@@ -1,8 +1,8 @@
-#include "plot.h"
+#include "stream_plot.h"
 
 namespace Ui {
 
-Plot::Plot(QWidget* pp) :
+StreamPlot::StreamPlot(QWidget* pp) :
     QCustomPlot(pp)
 {
     InitPlotArea();
@@ -15,7 +15,7 @@ Plot::Plot(QWidget* pp) :
     timer->start(100);
 }
 
-void Plot::RemoveOldPoints()
+void StreamPlot::RemoveOldPoints()
 {
     QDateTime oldest = QDateTime::currentDateTime().addSecs(-600);
     while (mTimestamps.size() >= 2 && mTimestamps[1] < oldest)
@@ -26,7 +26,7 @@ void Plot::RemoveOldPoints()
     }
 }
 
-void Plot::Refresh()
+void StreamPlot::Refresh()
 {
     RemoveOldPoints();
 
@@ -50,7 +50,7 @@ void Plot::Refresh()
     replot();
 }
 
-void Plot::Push(QDateTime ts, double y, QColor color)
+void StreamPlot::Push(QDateTime ts, double y, QColor color)
 {
     // values are pushed in that way:
     // 1. values =     [ 1  1 ]
@@ -75,7 +75,7 @@ void Plot::Push(QDateTime ts, double y, QColor color)
     Refresh();
 }
 
-void Plot::InitPlotArea()
+void StreamPlot::InitPlotArea()
 {
     mGraph = new QCPColorGraph(xAxis, yAxis);
     mGraph->setName(QLatin1String("MainGraph "));

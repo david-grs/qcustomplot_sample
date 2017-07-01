@@ -1,5 +1,5 @@
 #include "window.h"
-#include "plot.h"
+#include "stream_plot.h"
 
 #include <cstdlib>
 #include <array>
@@ -40,7 +40,7 @@ namespace Ui {
 
 Window::Window()
 {
-    mPlot = new Plot(this);
+    mPlot = new StreamPlot(this);
 
     int i = 0;
     for(auto x : GenPoints<10>()())
