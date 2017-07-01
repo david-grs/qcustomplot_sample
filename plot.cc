@@ -12,7 +12,7 @@ Plot::Plot(QWidget* pp) :
     {
         Refresh();
     });
-    timer->start(50);
+    timer->start(100);
 }
 
 void Plot::RemoveOldPoints()
