@@ -1,16 +1,6 @@
 #include "plot.h"
 
-#include <iostream>
-
 namespace Ui {
-
-// TODO remove
-QColor GenColor()
-{
-    auto color = []() -> int { return std::abs(std::rand()) % 255; };
-    auto alpha = []() -> int { return std::abs(std::rand()) % 64 + 180; };
-    return QColor(color(), color(), color(), alpha());
-}
 
 Plot::Plot(QWidget* pp) :
     QCustomPlot(pp)
@@ -21,14 +11,8 @@ Plot::Plot(QWidget* pp) :
     connect(timer, &QTimer::timeout, [this]()
     {
         Refresh();
-
-        // TODO remove
-        static int i = 0;
-        if ((++i) % 5 == 0)
-            Push(QDateTime::currentDateTime(), std::rand() % 100, GenColor());
     });
-
-    timer->start(1000);
+    timer->start(50);
 }
 
 void Plot::RemoveOldPoints()

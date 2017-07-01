@@ -51,6 +51,16 @@ Window::Window() :
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     setCentralWidget(&mPlot);
 
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, [this]()
+    {
+        static int i = 0;
+        if ((++i) % 5 == 0)
+            mPlot.Push(QDateTime::currentDateTime(), std::rand() % 100, GenColor());
+    });
+
+    timer->start(1000);
+
     mPlot.installEventFilter(this);
 }
 
