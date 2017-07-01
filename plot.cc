@@ -93,8 +93,6 @@ void Plot::Push(QDateTime ts, double y, QColor color)
 
 void Plot::InitPlotArea()
 {
-    //setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
-
     mGraph = new QCPColorGraph(xAxis, yAxis);
     mGraph->setName(QLatin1String("MainGraph "));
 
