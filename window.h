@@ -61,9 +61,12 @@ public:
         resize(800, 600);
         setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
         setCentralWidget(&mPlot);
+
+        mPlot.installEventFilter(this);
     }
-    
+
 protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
 
