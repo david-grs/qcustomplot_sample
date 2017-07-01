@@ -50,8 +50,9 @@ int main( int argc, char **argv )
         auto now = QDateTime::currentDateTime().addSecs(-60.0 * (9 - i++));
         plot.Push(now, x.y, x.color);
     }
-    
+
     plot.resize(800, 600);
+    plot.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     plot.show();
 
     return a.exec();
