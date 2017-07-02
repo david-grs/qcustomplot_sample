@@ -19,12 +19,13 @@ StreamPlot::StreamPlot(QWidget* pp) :
 void StreamPlot::RemoveOldPoints()
 {
     QDateTime oldest = QDateTime::currentDateTime().addSecs(-600);
-    while (mTimestamps.size() >= 2 && mTimestamps[1] < oldest)
-    {
-        mTimestamps.pop_front();
-        mValues.pop_front();
-        mColors.pop_front();
-    }
+
+    std::size_t n = 0;
+    for (n = 0; n + 1 < mTimestamps.size() && mTimestamps[n + 1] < oldest; ++n);
+
+    mTimestamps.erase(mTimestamps.begin(), mTimestamps.begin() + n);
+    mValues.erase(mValues.begin(), mValues.begin() + n);
+    mColors.erase(mColors.begin(), mColors.begin() + n);
 }
 
 void StreamPlot::Refresh()
