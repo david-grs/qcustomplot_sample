@@ -11,14 +11,27 @@ struct Point
     QColor color;
 };
 
+static const QColor LightGreen(61, 251, 1, 185);
+static const QColor Blue(57, 163, 216, 235);
+static const QColor LightYellow(238, 216, 66, 236);
+static const QColor Cyan(78, 252, 240, 236);
+static const QColor Orange(254, 114, 75, 228);
+static const QColor Purple(222, 60, 228, 204);
+static const QColor Pink(251, 80, 207, 235);
+static const QColor Red(231, 82, 85, 215);
+
+static const std::vector<QColor> PreDefinedColors = {LightGreen, Blue, LightYellow, Cyan, Orange, Purple, Red};
+
+inline QColor GenColorPre() { return PreDefinedColors.at(std::rand() % PreDefinedColors.size()); }
+
 inline QColor GenColor()
 {
-    auto color = []() -> int { return std::abs(std::rand()) % 255; };
+    auto color = []() -> int { return std::abs(std::rand()) % 200 + 55; };
     auto alpha = []() -> int { return std::abs(std::rand()) % 64 + 180; };
     return QColor(color(), color(), color(), alpha());
 }
 
-inline Point GenPoint(double x) { return {x, double(std::rand() % 100), GenColor()}; }
+inline Point GenPoint(double x) { return {x, double(std::rand() % 100), GenColorPre()}; }
 
 template <std::size_t N>
 struct GenPoints
@@ -40,7 +53,7 @@ namespace Ui {
 
 Window::Window()
 {
-    mPlot = new StreamPlot(this, 120);
+    mPlot = new StreamPlot(this, 600);
 
     int i = 0;
     for(auto x : GenPoints<10>()())
@@ -49,7 +62,7 @@ Window::Window()
         mPlot->Push(now, x.y, x.color);
     }
 
-    resize(300, 200);
+    resize(1000, 200);
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     setCentralWidget(mPlot);
 
@@ -58,7 +71,7 @@ Window::Window()
     {
         static int i = 0;
         if ((++i) % 5 == 0)
-            mPlot->Push(QDateTime::currentDateTime(), std::rand() % 100, GenColor());
+            mPlot->Push(QDateTime::currentDateTime(), std::rand() % 100, GenColorPre());
     });
 
     timer->start(1000);
