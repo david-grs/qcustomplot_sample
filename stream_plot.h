@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QColor>
 #include <QDateTime>
+#include <QString>
 
 struct QCPColorGraph;
 
@@ -15,7 +16,7 @@ class StreamPlot : public QCustomPlot
 Q_OBJECT
 
 public:
-    StreamPlot(QWidget* pp, qint64 seconds);
+    StreamPlot(QString title, qint64 seconds, QWidget* parent);
     ~StreamPlot();
 
 public slots:
@@ -26,6 +27,7 @@ private:
     void Refresh();
     void RemoveOldPoints();
 
+    QString mTitle;
     qint64 mSeconds;
 
     QCPColorGraph* mGraph = nullptr;

@@ -6,7 +6,7 @@ namespace Ui {
 
 Window::Window()
 {
-    mPlot = new StreamPlot(this, 120);
+    mPlot = new StreamPlot("10Y", 120, this);
 
     int i = 0;
     for(auto x : GenPoints<10>()())

@@ -3,8 +3,11 @@
 
 namespace Ui {
 
-StreamPlot::StreamPlot(QWidget* pp, qint64 seconds) :
+StreamPlot::StreamPlot(QString title,
+                       qint64 seconds,
+                       QWidget* pp) :
     QCustomPlot(pp),
+    mTitle(title),
     mSeconds(seconds)
 {
     InitPlotArea();
@@ -130,7 +133,7 @@ void StreamPlot::InitPlotArea()
     textLabel->setPositionAlignment(Qt::AlignTop | Qt::AlignHCenter);
     textLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
     textLabel->position->setCoords(0.90, 0); // top right
-    textLabel->setText("10Y");
+    textLabel->setText(mTitle);
     textLabel->setFont(QFont(font().family(), 15, QFont::Weight::Bold));
     textLabel->setColor(QColor(61, 230, 1, 165));
 }
