@@ -43,9 +43,9 @@ void StreamPlot::Refresh()
     for (const QDateTime& time : mTimestamps)
     {
         qint64 ts = time.toMSecsSinceEpoch();
-        const double relativeMinutes = - (now - ts) / 60000.0;
+        const double relativeSeconds = - (now - ts) / 1000.0;
 
-        mTimeAxis.push_back(relativeMinutes);
+        mTimeAxis.push_back(relativeSeconds);
     }
 
     mTimeAxis.push_back(.0);
@@ -105,6 +105,10 @@ void StreamPlot::InitPlotArea()
     xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
     yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
 
+    QSharedPointer<QCPAxisTickerFixed> tt(new QCPAxisTickerFixed);
+    tt->setTickStep(mSeconds / 4.0);
+    xAxis->setTicker(tt);
+
     QLinearGradient plotGradient;
     plotGradient.setStart(0, 0);
     plotGradient.setFinalStop(0, 350);
@@ -119,7 +123,7 @@ void StreamPlot::InitPlotArea()
     axisRectGradient.setColorAt(1, QColor(30, 30, 30));
     axisRect()->setBackground(axisRectGradient);
 
-    xAxis->setRange(- mSeconds / 60, 0);
+    xAxis->setRange(- mSeconds, 1.0);
     yAxis->setRange(0, 100);
 
     QCPItemText *textLabel = new QCPItemText(this);
