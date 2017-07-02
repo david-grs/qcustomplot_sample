@@ -46,7 +46,6 @@ void StreamPlot::Refresh()
     mTimeAxis.push_back(.0);
     mGraph->setData(mTimeAxis, mValues, &mColors);
 
-    //legend->addItem(); // TODO
     replot();
 }
 
