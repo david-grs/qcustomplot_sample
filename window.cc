@@ -40,7 +40,7 @@ namespace Ui {
 
 Window::Window()
 {
-    mPlot = new StreamPlot(this);
+    mPlot = new StreamPlot(this, 600);
 
     int i = 0;
     for(auto x : GenPoints<10>()())

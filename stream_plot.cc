@@ -3,8 +3,9 @@
 
 namespace Ui {
 
-StreamPlot::StreamPlot(QWidget* pp) :
-    QCustomPlot(pp)
+StreamPlot::StreamPlot(QWidget* pp, qint64 seconds) :
+    QCustomPlot(pp),
+    mSeconds(seconds)
 {
     InitPlotArea();
 
@@ -16,9 +17,11 @@ StreamPlot::StreamPlot(QWidget* pp) :
     timer->start(100);
 }
 
+StreamPlot::~StreamPlot() =default;
+
 void StreamPlot::RemoveOldPoints()
 {
-    QDateTime oldest = QDateTime::currentDateTime().addSecs(-600);
+    QDateTime oldest = QDateTime::currentDateTime().addSecs(- mSeconds);
 
     std::size_t n = 0;
     for (n = 0; n + 1 < mTimestamps.size() && mTimestamps[n + 1] < oldest; ++n);
@@ -79,7 +82,7 @@ void StreamPlot::Push(QDateTime ts, double y, QColor color)
 void StreamPlot::InitPlotArea()
 {
     mGraph = new QCPColorGraph(xAxis, yAxis);
-    mGraph->setName(QLatin1String("MainGraph "));
+    mGraph->setName(QLatin1String("MainGraph"));
 
     mGraph->setPen(QPen(QColor(10, 140, 70, 160), 4));
 
@@ -116,7 +119,7 @@ void StreamPlot::InitPlotArea()
     axisRectGradient.setColorAt(1, QColor(30, 30, 30));
     axisRect()->setBackground(axisRectGradient);
 
-    xAxis->setRange(-10, 0);
+    xAxis->setRange(- mSeconds / 60, 0);
     yAxis->setRange(0, 100);
 
     QCPItemText *textLabel = new QCPItemText(this);

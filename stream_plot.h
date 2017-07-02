@@ -15,7 +15,8 @@ class StreamPlot : public QCustomPlot
 Q_OBJECT
 
 public:
-    explicit StreamPlot(QWidget* pp = nullptr);
+    StreamPlot(QWidget* pp, qint64 seconds);
+    ~StreamPlot();
 
 public slots:
     void Push(QDateTime x, double y, QColor color);
@@ -24,6 +25,8 @@ private:
     void InitPlotArea();
     void Refresh();
     void RemoveOldPoints();
+
+    qint64 mSeconds;
 
     QCPColorGraph* mGraph = nullptr;
 
