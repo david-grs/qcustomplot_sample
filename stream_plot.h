@@ -6,27 +6,9 @@
 #include <QColor>
 #include <QDateTime>
 
-#include <cassert>
+struct QCPColorGraph;
 
 namespace Ui {
-
-class QCPColorGraph : public QCPGraph
-{
-public:
-    QCPColorGraph(QCPAxis *keyAxis, QCPAxis *valueAxis) :
-        QCPGraph(keyAxis, valueAxis)
-    {
-    }
-
-    void setData(const QVector<double>& keys,
-                 const QVector<double>& values,
-                 const QVector<QColor>* colors);
-
-    virtual void drawLinePlot(QCPPainter* painter, const QVector<QPointF>& lines) const override;
-
-private:
-    const QVector<QColor>* mColors;
-};
 
 class StreamPlot : public QCustomPlot
 {
