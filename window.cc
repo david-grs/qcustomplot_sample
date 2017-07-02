@@ -6,7 +6,7 @@ namespace Ui {
 
 Window::Window()
 {
-    mPlot = new StreamPlot(this, 600);
+    mPlot = new StreamPlot(this, 120);
 
     int i = 0;
     for(auto x : GenPoints<10>()())
@@ -15,7 +15,7 @@ Window::Window()
         mPlot->Push(now, x.y, x.color);
     }
 
-    resize(1000, 200);
+    resize(300, 200);
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     setCentralWidget(mPlot);
 
